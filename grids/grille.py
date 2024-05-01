@@ -109,17 +109,10 @@ class Grille():
 
         if nbr < 2 or nbr > 3:
             return self.dead
-
-    # Fonction d'appel de la liste des cellules
-    def getGrid(self):
-        return self.grid
     
     # Fonction d'appel d'une cellule localisée. Arguments(ligne et cellule) 
     def getCell(self, l, c):
         return self.grid[l][c]
-    
-    def reverseCell(self, l, c):
-        self.grid[l][c] = self.alive if self.grid[l][c] == self.dead else self.dead
 
     # Fonction d'appel du nombre de ligne
     def getSizeL(self):

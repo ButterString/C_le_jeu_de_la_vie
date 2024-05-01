@@ -29,16 +29,17 @@ class GameGrid(MainWindow):
     def randomLifeGame(self):
         self.grid.generateRandomGrid()
         self.canvas.canvasClear()
+        self.startGame()
     
     def customGame(self):
         fileGrid = askopenfilename(title="sélectionner votre grille",filetypes=[('JSON files','.json')])
         self.grid.customGrid(fileGrid)
-        self.canvas.canvasClear()
+        self.startGame()
     
     def startGame(self):
-        self.canvas.setPlayStatut()
+        self.canvas.setPlayStatut(True)
         self.canvas.canvasLoop()
     
     def stopGame(self):
-        self.canvas.setStopStatut()
+        self.canvas.setPlayStatut(False)
         self.canvas.canvasLoop()

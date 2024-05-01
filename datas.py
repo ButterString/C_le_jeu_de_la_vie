@@ -17,18 +17,3 @@ class Datas():
     def setDefault(self):
         self.directory = "jsons/"
         self.extension = ".json"
-    
-    def getDirGrids(self):
-        return "jsons/grids"
-    
-    def getGrids(self):
-        return self.getCustomGrids(self.getDirGrids())
-    
-    def getCustomGrids(self, dirGrids):
-        grids = []
-        files = os.listdir(dirGrids)
-
-        for f in files:
-            grids.append(dirGrids + "/" + f)
-        
-        return grids
