@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from tkinter import Canvas
-import math
+# import math
 
 from datas import Datas
 from windows.mainWindow import MainWindow
@@ -15,10 +15,12 @@ class GameGrid(MainWindow):
 
         # Déclaration de la liste des cellules
         self.grid = grid
+        # Déclaration de la taille des cellules
+        self.cellSize = 30
         
         # Dimensions du canvas
-        w = self.grid.getSizeL() * 30
-        h = self.grid.getSizeC() * 30
+        w = self.grid.getSizeL() * self.cellSize
+        h = self.grid.getSizeC() * self.cellSize
     
         # Déclaration du canvas
         self.canvas = CanvasGame(self, self.grid, w, h)

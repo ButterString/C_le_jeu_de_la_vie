@@ -6,13 +6,15 @@ from functools import partial
 
 class MenuBar():
     def __init__(self, mainWindow):
-        self.mainWindow = mainWindow
+        menuBar = Menu(mainWindow)
 
-        self.menuBar = Menu(self.mainWindow)
+        menuGrid = Menu(menuBar, tearoff=0)
 
-        self.menuBar.add_command(label="Grille aléatoire", command=self.mainWindow.randomLifeGame)
-        self.menuBar.add_command(label="Charger une grille", command=self.mainWindow.customGame)
-        self.menuBar.add_command(label="Run", command=self.mainWindow.startGame)
-        self.menuBar.add_command(label="stop", command=self.mainWindow.stopGame)
+        menuGrid.add_command(label="Grille aléatoire", command=mainWindow.randomLifeGame)
+        menuGrid.add_command(label="Charger une grille", command=mainWindow.customGame)
+        
+        menuBar.add_cascade(label="Grids", menu=menuGrid)
+        menuBar.add_command(label="Run", command=mainWindow.startGame)
+        menuBar.add_command(label="stop", command=mainWindow.stopGame)
 
-        self.mainWindow.config(menu=self.menuBar)
+        mainWindow.config(menu=menuBar)

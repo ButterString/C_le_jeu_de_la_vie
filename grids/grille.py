@@ -2,6 +2,8 @@
 
 import random
 import copy
+from tkinter.filedialog import asksaveasfile
+
 from datas import Datas
 
 class Grille():
@@ -45,7 +47,7 @@ class Grille():
 
     # Fonction de génération aléatoires de cellules
     def generateRandomGrid(self):
-        self.grid = []
+        jsonGrid = []
 
         # lecture des lignes
         for l in range(self.sizeL):
@@ -54,11 +56,14 @@ class Grille():
 
             # Lecture des colones
             for c in range(self.sizeC):
-                # Génération aléatoires de cellules
-                l.append(random.choice(self.states))
+                # Génération aléatoires de cellule
+                l.append(random.choice([0, 1]))
             
             # Ajout de la ligne à la grille
-            self.grid.append(l)
+            jsonGrid.append(l)
+        
+        self.datas.writeDatas(jsonGrid)
+        self.generateGrid(jsonGrid)
     
     # Fonction d'évolution des cellules
     def evolveGrid(self):
@@ -71,20 +76,13 @@ class Grille():
         while c < self.sizeC:
             cells = []
 
-            startC = c - 1 if c - 1 >= 0 else c
-            endC = c + 2 if c + 1 < self.sizeC else c + 1
+            lines = [self.getFirstPos(l), l, self.getLastPos(l, self.sizeL)]
 
-            startL = l - 1 if l - 1 >= 0 else l
-            endL = l + 2 if l + 1 < self.sizeL else l + 1
-
-            for line in oldGrid[startL:endL]:
-                if line == oldGrid[l]:
-                    if c - 1 >= 0:
-                        cells.append(line[c-1])
-                    if c + 1 < self.sizeC:
-                        cells.append(line[c+1])
-                else:
-                    cells += line[startC:endC]
+            for line in lines:
+                cells.append(oldGrid[line][self.getFirstPos(c)])
+                if line != l:
+                    cells.append(oldGrid[line][c])
+                cells.append(oldGrid[line][self.getLastPos(c, self.sizeC)])
             
             self.grid[l][c] = self.evalStatut(oldGrid[l][c], cells)
             
@@ -96,6 +94,14 @@ class Grille():
                 c = self.sizeC
         
         return False if self.grid == oldGrid else True
+    
+    # Fonction de déclaration de la position de départ
+    def getFirstPos(self, n):
+        return n - 1 if n - 1 >= 0 else -1
+    
+    # Fonction de déclaration de la position de fin
+    def getLastPos(self, n, limit):
+        return n + 1 if n + 1 < limit else 0
     
     # Fonction d'évaluation du statut de la cellules
     def evalStatut(self, statut, cells):
