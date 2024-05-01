@@ -36,9 +36,9 @@ class GameGrid(MainWindow):
         self.canvas.canvasClear()
     
     def startGame(self):
-        self.canvas.setPlayStatut(True)
+        self.canvas.setPlayStatut()
         self.canvas.canvasLoop()
     
     def stopGame(self):
-        self.canvas.setPlayStatut(False)
+        self.canvas.setStopStatut()
         self.canvas.canvasLoop()

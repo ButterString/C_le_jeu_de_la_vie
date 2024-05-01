@@ -41,12 +41,15 @@ class CanvasGame():
         self.canvas.delete('all')
         self.drawGrid()
     
-    def setPlayStatut(self, statut):
-        self.runLifeGame = statut
+    def setPlayStatut(self):
+        self.runLifeGame = True
+
+    def setStopStatut(self):
+        self.runLifeGame = False
     
     # Fonction de mise à jour de la grille
     def update(self):
-        self.grid.evolveGrid()
+        self.runLifeGame = self.grid.evolveGrid()
         self.canvasClear()
         self.drawGrid()
 

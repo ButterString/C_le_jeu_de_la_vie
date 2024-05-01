@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import random
+import copy
 from datas import Datas
 
 class Grille():
@@ -19,6 +20,8 @@ class Grille():
         self.dead = '#101010'
         # Tableau des états des cellules (pour la génération aléatoire)
         self.states = [self.alive, self.dead]
+        # Déclaration du rayon d'influence
+        self.influence = 3
         
         #  Génération des cellules
         self.generateGrid(startGrid)
@@ -59,63 +62,54 @@ class Grille():
     
     # Fonction d'évolution des cellules
     def evolveGrid(self):
+        oldGrid = copy.deepcopy(self.grid)
+
+        l = 0
+        c = 0
+
         # Lecture des lignes
-        for l in range(self.sizeL):
-            # Lecture des colonnes
-            for c in range(self.sizeL):
-                # Vérification du statut de la cellules
-                self.setCellStatut(l, c)
-    
-    # Fonction de vérification de l'état de la cellule. Arguments(ligne et cellule)
-    def setCellStatut(self, l, c):
-        # Liste vide des cellules voisines
-        self.eval = []
-        # Liste de l'état actuel des cellules
-        oldGrid = self.grid[:]
-        # Liste vide des lignes à évaluer
-        lines = []
+        while c < self.sizeC:
+            cells = []
 
-        # Récupération des indices des ligne à évaluer
-        if l - 1 >= 0:
-            lines.append(l - 1)
-        lines.append(l)
-        if l + 1 < self.sizeL:
-            lines.append(l + 1)
+            startC = c - 1 if c - 1 >= 0 else c
+            endC = c + 2 if c + 1 < self.sizeC else c + 1
 
-        # évaluation des cellules
-        for n in lines:
-            if c - 1 >= 0:
-                self.eval.append(oldGrid[n][self.getStart(c)])
-            if n != l:
-                self.eval.append(oldGrid[n][c])
-            if c + 1 < self.sizeL:
-                self.eval.append(oldGrid[n][self.getEnd(c)])
+            startL = l - 1 if l - 1 >= 0 else l
+            endL = l + 2 if l + 1 < self.sizeL else l + 1
 
-        # Si la cellule est vivante et qu'elle a deux voisines vivantes
-        if self.eval.count(self.alive) == 2 and self.grid[l][c] == self.alive:
-            # La cellule est en vie
-            self.grid[l][c] = self.alive
+            for line in oldGrid[startL:endL]:
+                if line == oldGrid[l]:
+                    if c - 1 >= 0:
+                        cells.append(line[c-1])
+                    if c + 1 < self.sizeC:
+                        cells.append(line[c+1])
+                else:
+                    cells += line[startC:endC]
+            
+            self.grid[l][c] = self.evalStatut(oldGrid[l][c], cells)
+            
+            c += 1
+            if c == self.sizeC:
+                l += 1
+                c = 0
+            if l == self.sizeL:
+                c = self.sizeC
         
-        # Si la cellule a 3 voisines vivantes (Quelque soit son état)
-        if self.eval.count(self.alive) == 3:
-            # La cellule est en vie
-            self.grid[l][c] = self.alive
-        
-        # Si il y a moins de 2 cellules ou plus de 3 cellules voisines vivantes
-        if self.eval.count(self.alive) < 2 or self.eval.count(self.alive) > 3:
-            # La cellules meurt
-            self.grid[l][c] = self.dead
-        
-    # Fonction de définition de la première cellules voisine
-    def getStart(self, n):
-        start = n - 1
-        return start if start >= 0 else self.sizeL - 1
+        return False if self.grid == oldGrid else True
     
-    # Fonction de définition de la dernière cellules voisine
-    def getEnd(self, n):
-        end = n + 1
-        return end if end < self.sizeL else self.sizeL - end
-    
+    # Fonction d'évaluation du statut de la cellules
+    def evalStatut(self, statut, cells):
+        nbr = cells.count(self.alive)
+
+        if nbr == 3:
+            return self.alive
+
+        if nbr == 2:
+            return self.alive if statut == self.alive else self.dead
+
+        if nbr < 2 or nbr > 3:
+            return self.dead
+
     # Fonction d'appel de la liste des cellules
     def getGrid(self):
         return self.grid
