@@ -16,5 +16,6 @@ class MenuBar():
         menuBar.add_cascade(label="Grids", menu=menuGrid)
         menuBar.add_command(label="Run", command=mainWindow.startGame)
         menuBar.add_command(label="stop", command=mainWindow.stopGame)
+        menuBar.add_command(label="Quit".rjust(250), command=mainWindow.leaveProg)
 
         mainWindow.config(menu=menuBar)

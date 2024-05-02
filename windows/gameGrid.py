@@ -3,15 +3,15 @@
 from tkinter import Canvas
 # import math
 
-from datas import Datas
+from datas.jsonDatas import JsonDatas
 from windows.mainWindow import MainWindow
 from windows.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
-from tkinter.filedialog import askopenfilename
 
 class GameGrid(MainWindow):
     def __init__(self, grid):
         super().__init__()
+        self.datas = JsonDatas()
 
         # Déclaration de la liste des cellules
         self.grid = grid
@@ -34,7 +34,7 @@ class GameGrid(MainWindow):
         self.startGame()
     
     def customGame(self):
-        fileGrid = askopenfilename(title="sélectionner votre grille",filetypes=[('JSON files','.json')])
+        fileGrid = self.datas.loadJson()
         self.grid.customGrid(fileGrid)
         self.startGame()
     

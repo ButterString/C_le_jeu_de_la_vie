@@ -12,3 +12,6 @@ class MainWindow(tkinter.Tk):
         # self.attributes('-alpha', 0.75)
         self.title('Life Game')
         self.geometry('900x900')
+    
+    def leaveProg(self):
+        quit()

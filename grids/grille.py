@@ -4,11 +4,11 @@ import random
 import copy
 from tkinter.filedialog import asksaveasfile
 
-from datas import Datas
+from datas.jsonDatas import JsonDatas
 
 class Grille():
     def __init__(self):
-        self.datas = Datas()
+        self.datas = JsonDatas()
 
         startGrid = self.loadGrid()
 
@@ -29,11 +29,12 @@ class Grille():
         self.generateGrid(startGrid)
     
     def loadGrid(self):
-        return self.datas.datasRead("emptyGrid")
+        return self.datas.jsonRead("emptyGrid")
     
     def customGrid(self, fileGrid):
-        startGrid = self.datas.findDatas(fileGrid)
-        self.generateGrid(startGrid)
+        startGrid = self.datas.findJson(fileGrid)
+        if startGrid != None:
+            self.generateGrid(startGrid)
     
     def generateGrid(self, startGrid):
         self.grid = []
@@ -62,7 +63,7 @@ class Grille():
             # Ajout de la ligne à la grille
             jsonGrid.append(l)
         
-        self.datas.writeDatas(jsonGrid)
+        self.datas.writeJson(jsonGrid)
         self.generateGrid(jsonGrid)
     
     # Fonction d'évolution des cellules
