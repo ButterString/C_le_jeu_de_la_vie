@@ -10,61 +10,44 @@ class Grille():
     def __init__(self):
         self.datas = JsonDatas()
 
-        startGrid = self.loadGrid()
+        self.grid = self.loadEmptyGrid()
 
         # Nombre de lignes
-        self.sizeL = len(startGrid)
+        self.sizeL = len(self.grid)
         # Nombre de colonnes
-        self.sizeC = len(startGrid[0])
-        # couleur des cellules vivante
-        self.alive = 'green'
-        # couleur des cellules mortes
-        self.dead = '#101010'
+        self.sizeC = len(self.grid[0])
+        # valeur des cellules vivantes
+        self.alive = 1
+        # valeur des cellules mortes
+        self.dead = 0
         # Tableau des états des cellules (pour la génération aléatoire)
         self.states = [self.alive, self.dead]
         # Déclaration du rayon d'influence
         self.influence = 3
-        
-        #  Génération des cellules
-        self.generateGrid(startGrid)
     
-    def loadGrid(self):
+    def loadEmptyGrid(self):
         return self.datas.jsonRead("emptyGrid")
     
-    def customGrid(self, fileGrid):
-        startGrid = self.datas.findJson(fileGrid)
-        if startGrid != None:
-            self.generateGrid(startGrid)
-    
-    def generateGrid(self, startGrid):
-        self.grid = []
+    def loadCustomGrid(self):
+        startGrid = self.datas.findJson(
+            self.datas.loadJson()
+        )
 
-        # lecture des lignes
-        for l in startGrid:
-            line = []
-            for c in l:
-                line.append(self.alive if c == 1 else self.dead)
-            self.grid.append(line)
+        if startGrid != None:
+            self.grid = startGrid
 
     # Fonction de génération aléatoires de cellules
     def generateRandomGrid(self):
-        jsonGrid = []
-
         # lecture des lignes
         for l in range(self.sizeL):
-            # Génération d'une liste vide dans chaque ligne
-            l = []
-
             # Lecture des colones
             for c in range(self.sizeC):
                 # Génération aléatoires de cellule
-                l.append(random.choice([0, 1]))
-            
-            # Ajout de la ligne à la grille
-            jsonGrid.append(l)
-        
-        self.datas.writeJson(jsonGrid)
-        self.generateGrid(jsonGrid)
+                cell = random.choice(self.states)
+                self.grid[l][c] = cell
+
+        # Sauvegarde de la grille
+        self.datas.writeJson(self.grid)
     
     # Fonction d'évolution des cellules
     def evolveGrid(self):

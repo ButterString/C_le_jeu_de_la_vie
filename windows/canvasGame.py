@@ -4,13 +4,24 @@ from tkinter import Canvas
 import math
 
 class CanvasGame():
-    def __init__(self, mainWindow, grid, w, h):
+    def __init__(self, mainWindow, grid):
         self.grid = grid
         self.mainWindow = mainWindow
         self.runLifeGame = False
+        # couleur des cellules vivante
+        self.alive = 'green'
+        # couleur des cellules mortes
+        self.dead = '#101010'
+        
+        # Déclaration de la taille des cellules
+        self.cellSize = 30
+        
+        # Dimensions du canvas
+        w = self.grid.getSizeL() * self.cellSize
+        h = self.grid.getSizeC() * self.cellSize
 
         # Déclaration du canvas
-        self.canvas = Canvas(self.mainWindow, width=w, height=h)
+        self.canvas = Canvas(self.mainWindow, width=w, height=h, bg=self.dead)
         self.canvas.pack()
 
         # Génération de la grille
@@ -19,23 +30,23 @@ class CanvasGame():
     # Fonctions de génération de la grille
     def drawGrid(self):
         y0 = 0
-        y1 = self.grid.getSizeL()
+        y1 = self.cellSize
 
         # lecture des lignes
         for l in range(self.grid.getSizeL()):
             x0 = 0
-            x1 = self.grid.getSizeC()
+            x1 = self.cellSize
             
             # lecture des colones
             for c in range(self.grid.getSizeC()):
-                cell = self.grid.getCell(l, c)
-                self.canvas.create_rectangle(x0, y0, x1, y1, width = 1, fill = cell)
+                cell = self.dead if self.grid.getCell(l, c) < 1 else self.alive
+                self.canvas.create_oval(x0, y0, x1, y1, width = 0, fill = cell)
 
-                x0 += self.grid.getSizeC()
-                x1 += self.grid.getSizeC()
+                x0 += self.cellSize
+                x1 += self.cellSize
 
-            y0 += self.grid.getSizeL()
-            y1 += self.grid.getSizeL()
+            y0 += self.cellSize
+            y1 += self.cellSize
     
     def canvasClear(self):
         self.canvas.delete('all')

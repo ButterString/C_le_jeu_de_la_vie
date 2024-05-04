@@ -1,9 +1,5 @@
 # coding: utf-8
 
-from tkinter import Canvas
-# import math
-
-from datas.jsonDatas import JsonDatas
 from windows.mainWindow import MainWindow
 from windows.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
@@ -11,20 +7,11 @@ from windows.menuBar import MenuBar
 class GameGrid(MainWindow):
     def __init__(self, grid):
         super().__init__()
-        self.datas = JsonDatas()
 
         # Déclaration de la liste des cellules
         self.grid = grid
-        # Déclaration de la taille des cellules
-        self.cellSize = 30
-        
-        # Dimensions du canvas
-        w = self.grid.getSizeL() * self.cellSize
-        h = self.grid.getSizeC() * self.cellSize
-    
         # Déclaration du canvas
-        self.canvas = CanvasGame(self, self.grid, w, h)
-
+        self.canvas = CanvasGame(self, self.grid)
         # Initialisation de la barre de menu
         self.menuBar = MenuBar(self)
     
@@ -33,9 +20,8 @@ class GameGrid(MainWindow):
         self.canvas.canvasClear()
         self.startGame()
     
-    def customGame(self):
-        fileGrid = self.datas.loadJson()
-        self.grid.customGrid(fileGrid)
+    def loadGame(self):
+        self.grid.loadCustomGrid()
         self.startGame()
     
     def startGame(self):
