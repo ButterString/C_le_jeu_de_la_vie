@@ -10,8 +10,9 @@ class MenuBar():
 
         menuGrid = Menu(menuBar, tearoff=0)
 
-        menuGrid.add_command(label="Random grid", command=mainWindow.randomLifeGame)
+        menuGrid.add_command(label="Random grid", command=mainWindow.randomGame)
         menuGrid.add_command(label="Load grid", command=mainWindow.loadGame)
+        menuGrid.add_command(label="Edit grid", command=mainWindow.editGame)
         
         menuBar.add_cascade(label="Grids", menu=menuGrid)
         menuBar.add_command(label="Run", command=mainWindow.startGame)

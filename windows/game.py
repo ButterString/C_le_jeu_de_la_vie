@@ -3,19 +3,19 @@
 from windows.mainWindow import MainWindow
 from canvasGrids.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
-from grids.grille import Grille
+from grids.grid import Grid
 
-class GameGrid(MainWindow):
-    def __init__(self, grid):
+class Game(MainWindow):
+    def __init__(self):
         super().__init__()
         # Déclaration de la liste des cellules
-        self.grid = grid
+        self.grid = Grid()
         # Déclaration du canvas
         self.canvas = CanvasGame(self, self.grid)
         # Initialisation de la barre de menu
         self.menuBar = MenuBar(self)
 
-    def randomLifeGame(self):
+    def randomGame(self):
         # Génération d'une grille aléatoire
         self.grid.generateRandomGrid()
         # Lancement du jeu
@@ -26,6 +26,11 @@ class GameGrid(MainWindow):
         self.grid.loadCustomGrid()
         # Lancement du jeu
         self.startGame()
+
+    def editGame(self):
+        self.grid.loadEmptyGrid()
+        self.stopGame()
+        self.canvas.bindCanvas()
 
     def startGame(self):
         # Modification du statut de lecture

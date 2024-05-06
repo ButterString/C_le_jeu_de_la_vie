@@ -6,11 +6,13 @@ from tkinter.filedialog import asksaveasfile
 
 from datas.jsonDatas import JsonDatas
 
-class Grille():
+class Grid():
     def __init__(self):
+        # Initialisation de la classe JsonDatas
         self.datas = JsonDatas()
 
-        self.grid = self.loadEmptyGrid()
+        # Chargement d'une grille vierge
+        self.loadEmptyGrid()
 
         # Nombre de lignes
         self.sizeL = len(self.grid)
@@ -26,7 +28,7 @@ class Grille():
         self.influence = 3
 
     def loadEmptyGrid(self):
-        return self.datas.jsonRead("emptyGrid")
+        self.grid = self.datas.jsonRead("emptyGrid")
 
     def loadCustomGrid(self):
         startGrid = self.datas.findJson(
@@ -106,10 +108,6 @@ class Grille():
         if nbr < 2 or nbr > 3:
             return self.dead
 
-    # Fonction d'appel d'une cellule localisée. Arguments(ligne et cellule) 
-    def getCell(self, l, c):
-        return self.grid[l][c]
-
     # Fonction d'appel du nombre de ligne
     def getSizeL(self):
         return self.sizeL
@@ -117,3 +115,10 @@ class Grille():
     # Fonction d'appel du nombre de colonnes
     def getSizeC(self):
         return self.sizeC
+
+    # Fonction d'appel d'une cellule localisée. Arguments(ligne et cellule) 
+    def getCell(self, l, c):
+        return self.grid[l][c]
+    
+    def changeCell(self, l, c):
+        self.grid[l][c] = self.alive if self.grid[l][c] == self.dead else self.dead
