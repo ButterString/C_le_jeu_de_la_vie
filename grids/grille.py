@@ -58,15 +58,7 @@ class Grille():
 
         # Lecture des lignes
         while c < self.sizeC:
-            cells = []
-
-            lines = [self.getFirstPos(l), l, self.getLastPos(l, self.sizeL)]
-
-            for line in lines:
-                cells.append(oldGrid[line][self.getFirstPos(c)])
-                if line != l:
-                    cells.append(oldGrid[line][c])
-                cells.append(oldGrid[line][self.getLastPos(c, self.sizeC)])
+            cells = self.getEvalGrid(oldGrid, l, c)
             
             self.grid[l][c] = self.evalStatut(oldGrid[l][c], cells)
             
@@ -78,6 +70,20 @@ class Grille():
                 c = self.sizeC
         
         return False if self.grid == oldGrid else True
+    
+    # Fonction de construction de la grille d'évaluation
+    def getEvalGrid(self, grid, l, c):
+        cells = []
+
+        lines = [self.getFirstPos(l), l, self.getLastPos(l, self.sizeL)]
+
+        for line in lines:
+            cells.append(grid[line][self.getFirstPos(c)])
+            if line != l:
+                cells.append(grid[line][c])
+            cells.append(grid[line][self.getLastPos(c, self.sizeC)])
+        
+        return cells
     
     # Fonction de déclaration de la position de départ
     def getFirstPos(self, n):
