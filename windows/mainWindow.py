@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import sys
 import tkinter
 from tkinter import *
 
@@ -14,4 +15,4 @@ class MainWindow(tkinter.Tk):
         self.geometry('900x900')
     
     def leaveProg(self):
-        quit()
+        sys.exit()

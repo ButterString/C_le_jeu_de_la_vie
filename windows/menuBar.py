@@ -2,21 +2,26 @@
 
 from tkinter import Menu
 from tkinter.filedialog import askopenfilename
-from functools import partial
 
 class MenuBar():
     def __init__(self, mainWindow):
         menuBar = Menu(mainWindow)
 
-        menuGrid = Menu(menuBar, tearoff=0)
+        menuGame = Menu(menuBar, tearoff=0)
 
-        menuGrid.add_command(label="Random grid", command=mainWindow.randomGame)
-        menuGrid.add_command(label="Load grid", command=mainWindow.loadGame)
-        menuGrid.add_command(label="Edit grid", command=mainWindow.editGame)
+        menuGame.add_command(label="Random", command=mainWindow.randomGame)
+        menuGame.add_command(label="Load", command=mainWindow.loadGame)
+        menuGame.add_separator()
+        menuGame.add_command(label="Create Game", command=mainWindow.createGame)
+        menuGame.add_separator()
+        menuGame.add_command(label="Save", command=mainWindow.saveGame)
+        menuGame.add_command(label="Save As", command=mainWindow.backupGame)
+        menuGame.add_separator()
+        menuGame.add_command(label="Quit", command=mainWindow.leaveProg)
         
-        menuBar.add_cascade(label="Grids", menu=menuGrid)
+        menuBar.add_cascade(label="Game", menu=menuGame)
+        menuBar.add_separator()
         menuBar.add_command(label="Run", command=mainWindow.startGame)
         menuBar.add_command(label="stop", command=mainWindow.stopGame)
-        menuBar.add_command(label="Quit".rjust(250), command=mainWindow.leaveProg)
 
         mainWindow.config(menu=menuBar)

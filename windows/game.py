@@ -1,45 +1,94 @@
 # coding: utf-8
 
+from tkinter import Canvas
+import math
+
 from windows.mainWindow import MainWindow
 from canvasGrids.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
 from grids.grid import Grid
+from datas.jsonDatas import JsonDatas
 
 class Game(MainWindow):
     def __init__(self):
         super().__init__()
-        # Déclaration de la liste des cellules
+        # Déclaration des données
+        self.datas = JsonDatas()
+        # Déclaration de la grille
         self.grid = Grid()
         # Déclaration du canvas
-        self.canvas = CanvasGame(self, self.grid)
+        self.canvas = CanvasGame(self)
         # Initialisation de la barre de menu
         self.menuBar = MenuBar(self)
+        # Statut de lecture
+        self.play = False
+        # Nom de la grille
+        self.nameGrid = ""
 
+    # Génération d'une grille aléatoire
     def randomGame(self):
-        # Génération d'une grille aléatoire
+        self.newGame()
         self.grid.generateRandomGrid()
-        # Lancement du jeu
-        self.startGame()
+        self.canvas.drawGrid(self.grid.getGrid())
 
+    # Chargement d'une grille
     def loadGame(self):
-        # Chargement d'une grille enregistrée
-        self.grid.loadCustomGrid()
-        # Lancement du jeu
-        self.startGame()
+        self.newGame()
+        self.nameGrid = self.datas.loadJson()
+        self.grid.setGrid(self.datas.findJson(self.nameGrid))
+        self.canvas.drawGrid(self.grid.getGrid())
 
-    def editGame(self):
-        self.grid.loadEmptyGrid()
+    # Création d'une grille
+    def createGame(self):
+        self.newGame()
+        self.grid.setVirginGrid()
+        self.canvas.drawGrid(self.grid.getGrid())
+        self.bind('<Button-1>', self.eventGame)
+        self.editGame()
+
+    # Gestion de l'évènement
+    def eventGame(self, event):
+        l = math.floor(event.y / self.grid.getSizeL())
+        c = math.floor(event.x / self.grid.getSizeC())
+
+        self.grid.changeCell(l, c)
+        self.canvas.drawGrid(self.grid.getGrid())
+
+    # Backup de la grille
+    def backupGame(self):
         self.stopGame()
-        self.canvas.bindCanvas()
 
+        f = self.datas.saveJson(self.grid.getGrid())
+        if f != False:
+            self.nameGrid = f
+
+    # sauvegarde de la grille
+    def saveGame(self):
+        self.stopGame()
+
+        if self.nameGrid == "":
+            self.backupGame()
+        else:
+            self.datas.writeJson(self.nameGrid, self.grid.getGrid())
+    
+    # Nouveau jeu
+    def newGame(self):
+        self.stopGame()
+        self.nameGrid = ""
+
+    # Lancement du jeu
     def startGame(self):
-        # Modification du statut de lecture
-        self.canvas.setPlayStatut(True)
-        # Lecture du jeu
-        self.canvas.canvasLoop()
+        self.unbind('<Button-1>')
+        self.statut = True
+        self.playGame()
 
+    # Arrêt du jeu
     def stopGame(self):
-        # Modification du statut de lecture
-        self.canvas.setPlayStatut(False)
-        # Arrêt du jeu
-        self.canvas.canvasLoop()
+        self.statut = False
+
+    # Lecture du jeu
+    def playGame(self):
+        if self.statut == True:
+            self.statut = self.grid.evolveGrid()
+            self.canvas.drawGrid(self.grid.getGrid())
+            self.after(250, self.playGame)
