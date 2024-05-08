@@ -23,17 +23,15 @@ class JsonDatas():
             return datas
     
     def loadJson(self):
-        return askopenfilename(title="sélectionner votre grille",filetypes=[('JSON files','.json')])
+        f = askopenfilename(title="sélectionner votre grille",filetypes=[('JSON files','.json')])
+        return f if f != "" else False
 
     def saveJson(self, datas):
         f = asksaveasfile(mode='w', defaultextension=".json")
-        if f != None:
-            filename = f.name
-            f.write(json.dumps(datas))
-            f.close()
-            return filename
-        
-        return False
+        filename = f.name if f != None else False
+        f.write(json.dumps(datas))
+        f.close()
+        return filename
 
     def writeJson(self, fileName, datas):
         f = open(fileName, "w")

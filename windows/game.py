@@ -35,8 +35,9 @@ class Game(MainWindow):
     def loadGame(self):
         self.newGame()
         self.nameGrid = self.datas.loadJson()
-        self.grid.setGrid(self.datas.findJson(self.nameGrid))
-        self.canvas.drawGrid(self.grid.getGrid())
+        if self.nameGrid != False:
+            self.grid.setGrid(self.datas.findJson(self.nameGrid))
+            self.canvas.drawGrid(self.grid.getGrid())
 
     # Création d'une grille
     def createGame(self):
