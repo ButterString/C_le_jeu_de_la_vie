@@ -29,7 +29,7 @@ class Game(MainWindow):
     def randomGame(self):
         self.newGame()
         self.grid.generateRandomGrid()
-        self.canvas.drawGrid(self.grid.getGrid())
+        self.canvas.drawGrid(self.grid.grid)
 
     # Chargement d'une grille
     def loadGame(self):
@@ -37,29 +37,29 @@ class Game(MainWindow):
         self.nameGrid = self.datas.loadJson()
         if self.nameGrid != False:
             self.grid.setGrid(self.datas.findJson(self.nameGrid))
-            self.canvas.drawGrid(self.grid.getGrid())
+            self.canvas.drawGrid(self.grid.grid)
 
     # Création d'une grille
     def createGame(self):
         self.newGame()
         self.grid.setVirginGrid()
-        self.canvas.drawGrid(self.grid.getGrid())
+        self.canvas.drawGrid(self.grid.grid)
         self.bind('<Button-1>', self.eventGame)
         self.editGame()
 
     # Gestion de l'évènement
     def eventGame(self, event):
-        l = math.floor(event.y / self.grid.getSizeL())
-        c = math.floor(event.x / self.grid.getSizeC())
+        l = math.floor(event.y / self.grid.sizeL)
+        c = math.floor(event.x / self.grid.sizeC)
 
         self.grid.changeCell(l, c)
-        self.canvas.drawGrid(self.grid.getGrid())
+        self.canvas.drawGrid(self.grid.grid)
 
     # Backup de la grille
     def backupGame(self):
         self.stopGame()
 
-        f = self.datas.saveJson(self.grid.getGrid())
+        f = self.datas.saveJson(self.grid.grid)
         if f != False:
             self.nameGrid = f
 
@@ -70,7 +70,7 @@ class Game(MainWindow):
         if self.nameGrid == "":
             self.backupGame()
         else:
-            self.datas.writeJson(self.nameGrid, self.grid.getGrid())
+            self.datas.writeJson(self.nameGrid, self.grid.grid)
     
     # Nouveau jeu
     def newGame(self):
@@ -91,5 +91,5 @@ class Game(MainWindow):
     def playGame(self):
         if self.statut == True:
             self.statut = self.grid.evolveGrid()
-            self.canvas.drawGrid(self.grid.getGrid())
+            self.canvas.drawGrid(self.grid.grid)
             self.after(250, self.playGame)
