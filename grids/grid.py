@@ -26,7 +26,7 @@ class Grid(GridModel):
         oldGrid = copy.deepcopy(self._grid)
 
         for x in self._grid:
-            self._grid[(l, c)] = self.evalStatut(oldGrid, x)
+            self._grid[x] = self.evalStatut(oldGrid, x)
 
         return False if self._grid == oldGrid else True
 
@@ -39,7 +39,7 @@ class Grid(GridModel):
             return self._alive
 
         if nbr == 2:
-            return self._alive if statut == self._alive else self._dead
+            return self._alive if self._grid[coord] == self._alive else self._dead
 
         if nbr < 2 or nbr > 3:
             return self._dead
@@ -48,22 +48,22 @@ class Grid(GridModel):
     def getEvalGrid(self, grid, coord):
         cells = []
 
-        l = coord[0] - influence
-        c = coord[1] - influence
+        l = coord[0] - self.influence
+        c = coord[1] - self.influence
 
-        while l <= coord[0] + influence:
+        while l <= coord[0] + self.influence:
             if l >= 0 and l < self._steps[0]:
                 if c >= 0 and c < self._steps[1]:
                     if (l, c) != coord:
                         cells.append(grid[(l, c)])
 
-            if l <= coord[0] + influence:
+            if l <= coord[0] + self.influence:
                 c += 1
             else:
-                c = coord[1] - influence
-            if c > coord[1] + influence:
+                c = coord[1] - self.influence
+            if c > coord[1] + self.influence:
                 l += 1
-                c = coord[1] - influence
+                c = coord[1] - self.influence
 
         return cells
 

@@ -29,7 +29,7 @@ class Game(MainWindow):
     def randomGame(self):
         self.newGame()
         self.grid.generateRandomGrid()
-        self.canvas.drawGrid(self.grid.grid)
+        self.canvas.drawGrid(self.grid)
 
     # Chargement d'une grille
     def loadGame(self):
@@ -37,23 +37,22 @@ class Game(MainWindow):
         self.nameGrid = self.datas.loadJson()
         if self.nameGrid != False:
             self.grid.grid(self.datas.findJson(self.nameGrid))
-            self.canvas.drawGrid(self.grid.grid)
+            self.canvas.drawGrid(self.grid)
 
     # Création d'une grille
     def createGame(self):
         self.newGame()
         self.grid.setVirginGrid()
-        self.canvas.drawGrid(self.grid.grid)
+        self.canvas.drawGrid(self.grid)
         self.bind('<Button-1>', self.eventGame)
-        self.editGame()
 
     # Gestion de l'évènement
     def eventGame(self, event):
-        l = math.floor(event.y / self.grid.sizeL)
-        c = math.floor(event.x / self.grid.sizeC)
+        l = math.floor(event.y / self.grid.steps[0])
+        c = math.floor(event.x / self.grid.steps[1])
 
         self.grid.changeCell(l, c)
-        self.canvas.drawGrid(self.grid.grid)
+        self.canvas.drawGrid(self.grid)
 
     # Backup de la grille
     def backupGame(self):
@@ -91,5 +90,5 @@ class Game(MainWindow):
     def playGame(self):
         if self.statut == True:
             self.statut = self.grid.evolveGrid()
-            self.canvas.drawGrid(self.grid.grid)
+            self.canvas.drawGrid(self.grid)
             self.after(250, self.playGame)

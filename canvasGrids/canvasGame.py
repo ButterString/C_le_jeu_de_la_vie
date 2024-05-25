@@ -21,33 +21,28 @@ class CanvasGame():
         self.canvas.delete('all')
 
         # Dimensions
-        cols = int(self.sizeW / len(grid[0]))
-        lines = int(self.sizeH / len(grid))
+        lines = int(self.sizeH / grid.steps[0])
+        cols = int(self.sizeW / grid.steps[1])
 
-        # Coordonnées verticales
-        y0 = 0
-        y1 = lines
+        l = 0
+        c = 0
 
-        # Lecture des lignes
-        for l in range(lines):
-            # Coordonnées horizontales
-            x0 = 0
-            x1 = cols
+        while l < grid.steps[0]:
+            # Définition de la cellule
+            cell = self.dead if grid.grid[(l, c)] < 1 else self.alive
 
-            # Lecture des colonnes
-            for c in range(cols):
-                # Définition de la cellule
-                cell = self.dead if grid[l][c] < 1 else self.alive
-                # Création de la cellule
-                self.canvas.create_oval(x0, y0, x1, y1, width=0, fill=cell)
+            # Création de la cellule
+            x0 = c * cols
+            y0 = l * lines
+            x1 = x0 + cols
+            y1 = y0 + lines
+            self.canvas.create_oval(x0, y0, x1, y1, width=0, fill=cell)
 
-                # Évolution des positions horizontales
-                x0 += cols
-                x1 += cols
+            c += 1
 
-            # Évolution des positions verticales
-            y0 += lines
-            y1 += lines
+            if c == grid.steps[1]:
+                c = 0
+                l += 1
 
     # Dimensions du canvas
     def setDimensions(self, w, h):
