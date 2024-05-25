@@ -3,7 +3,8 @@
 class GridModel():
     def __init__(self):
         # Dimensions par défaut
-        self._steps = (30, 30)
+        self._sizeL = 30
+        self._sizeC = 30
         # valeur des cellules vivantes
         self._alive = 1
         # valeur des cellules mortes
@@ -13,15 +14,19 @@ class GridModel():
         # Déclaration du rayon d'influence
         self._influence = 1
         # Initialisation de la grille
-        self._grid = {}
+        self._grid = []
 
     # Appel d'une cellule localisée. Arguments(ligne et cellule) 
     def getCell(self, l, c):
-        return self._grid[(l, c)]
+        return self._grid[l][c]
 
     @property
-    def steps(self):
-        return self._steps
+    def sizeL(self):
+        return self._sizeL
+
+    @property
+    def sizeC(self):
+        return self._sizeC
 
     @property
     def alive(self):
@@ -43,9 +48,13 @@ class GridModel():
     def grid(self):
         return self._grid
 
-    @steps.setter
-    def steps(self, x, y):
-        self._steps = (x, y)
+    @sizeL.setter
+    def sizeL(self, size):
+        self._sizeL = size
+
+    @sizeC.setter
+    def sizeC(self, size):
+        self._sizeC = size
 
     @alive.setter
     def alive(self, value):

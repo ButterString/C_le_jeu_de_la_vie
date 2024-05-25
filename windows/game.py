@@ -36,7 +36,7 @@ class Game(MainWindow):
         self.newGame()
         self.nameGrid = self.datas.loadJson()
         if self.nameGrid != False:
-            self.grid.setGrid(self.datas.findJson(self.nameGrid))
+            self.grid.grid(self.datas.findJson(self.nameGrid))
             self.canvas.drawGrid(self.grid.grid)
 
     # Création d'une grille
