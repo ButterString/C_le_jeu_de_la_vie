@@ -1,19 +1,10 @@
 # coding: utf-8
 
-from tkinter import Canvas
+from models.canvasModel import CanvasModel
 
-class CanvasGame():
+class CanvasGame(CanvasModel):
     def __init__(self, mainWindow):
-        # Couleur des cellules vivante
-        self.alive = 'white'
-        # Couleur des cellules mortes
-        self.dead = 'black'
-        # Dimensions
-        self.setDimensions(900, 900)
-
-        # Déclaration du canvas
-        self.canvas = Canvas(mainWindow, width=self.sizeW, height=self.sizeH, bg='black')
-        self.canvas.pack()
+        super().__init__(mainWindow)
 
     # Fonctions de génération de la grille
     def drawGrid(self, grid):
@@ -28,27 +19,17 @@ class CanvasGame():
         c = 0
 
         while l < grid.steps[0]:
+            x = c * cols
+            y = l * lines
+
             # Définition de la cellule
             cell = self.dead if grid.grid[(l, c)] < 1 else self.alive
-
             # Création de la cellule
-            x0 = c * cols
-            y0 = l * lines
-            x1 = x0 + cols
-            y1 = y0 + lines
-            self.canvas.create_oval(x0, y0, x1, y1, width=0, fill=cell)
+            coords = [x, y, x + cols, y + lines]
+            self.canvas.create_oval(coords[0], coords[1], coords[2], coords[3], width=0, fill=cell)
 
             c += 1
 
             if c == grid.steps[1]:
                 c = 0
                 l += 1
-
-    # Dimensions du canvas
-    def setDimensions(self, w, h):
-        self.sizeW = w
-        self.sizeH = h
-
-    # Édition du canvas
-    def getCanvas(self):
-        return self.canvas
