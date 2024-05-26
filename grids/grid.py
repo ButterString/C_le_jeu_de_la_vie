@@ -9,17 +9,11 @@ class Grid(GridModel):
     def __init__(self):
         super().__init__()
 
-    # Génération d'une grille vierge
-    def setVirginGrid(self):
+    # Génération d'une grille
+    def newGrid(self, rand = False):
         for l in range(self._steps[0]):
             for c in range(self._steps[1]):
-                self._grid[(l, c)] = 0
-
-    # Génération aléatoires de cellules
-    def generateRandomGrid(self):
-        for l in range(self._steps[0]):
-            for c in range(self._steps[1]):
-                self._grid[(l, c)] = random.choice(self.states)
+                self._grid[(l, c)] = 0 if rand == False else random.choice(self.states)
 
     # Évolution des cellules
     def evolveGrid(self):
@@ -37,33 +31,29 @@ class Grid(GridModel):
 
         if nbr == 3:
             return self._alive
-
         if nbr == 2:
             return self._alive if self._grid[coord] == self._alive else self._dead
-
         if nbr < 2 or nbr > 3:
             return self._dead
 
     # Construction de la grille d'évaluation
     def getEvalGrid(self, grid, coord):
         cells = []
+        cell = [coord[0] - self.influence, coord[1] - self.influence]
 
-        l = coord[0] - self.influence
-        c = coord[1] - self.influence
+        while cell[0] <= coord[0] + self.influence:
+            if cell[0] >= 0 and cell[0] < self._steps[0]:
+                if cell[1] >= 0 and cell[1] < self._steps[1]:
+                    if (cell[0], cell[1]) != coord:
+                        cells.append(grid[(cell[0], cell[1])])
 
-        while l <= coord[0] + self.influence:
-            if l >= 0 and l < self._steps[0]:
-                if c >= 0 and c < self._steps[1]:
-                    if (l, c) != coord:
-                        cells.append(grid[(l, c)])
-
-            if l <= coord[0] + self.influence:
-                c += 1
+            if cell[0] <= coord[0] + self.influence:
+                cell[1] += 1
             else:
-                c = coord[1] - self.influence
-            if c > coord[1] + self.influence:
-                l += 1
-                c = coord[1] - self.influence
+                cell[1] = coord[1] - self.influence
+            if cell[1] > coord[1] + self.influence:
+                cell[0] += 1
+                cell[1] = coord[1] - self.influence
 
         return cells
 
@@ -71,14 +61,14 @@ class Grid(GridModel):
     def setDimensions(self, sizeL, sizeC):
         self._steps = (sizeL, sizeC)
 
+    # Appel d'une cellule localisée. Arguments(ligne et cellule) 
+    def getCell(self, l, c):
+        return self._grid[(l, c)]
+
     # Inversion de l'état de la cellule
     def changeCell(self, l, c):
         self._grid[(l, c)] = self._alive if self._grid[(l, c)] == self._dead else self._dead
 
-    # Déclaration de la position de départ
-    def getFirstPos(self, n):
-        return n - 1 if n - 1 >= 0 else -1
-
-    # Déclaration de la position de fin
-    def getLastPos(self, n, limit):
-        return n + 1 if n + 1 < limit else 0
+    # Initialisation d'une cellules
+    def setCell(self, cell, statut):
+        self._grid[cell] = statut

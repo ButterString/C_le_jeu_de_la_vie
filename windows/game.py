@@ -28,21 +28,27 @@ class Game(MainWindow):
     # Génération d'une grille aléatoire
     def randomGame(self):
         self.newGame()
-        self.grid.generateRandomGrid()
+        self.grid.newGrid(True)
         self.canvas.drawGrid(self.grid)
 
     # Chargement d'une grille
     def loadGame(self):
         self.newGame()
         self.nameGrid = self.datas.loadJson()
+
         if self.nameGrid != False:
-            self.grid.grid(self.datas.findJson(self.nameGrid))
+            grid = self.datas.findJson(self.nameGrid)
+
+            for x in grid:
+                coord = x.split(":")
+                self.grid.setCell((int(coord[0]), int(coord[1])), grid[x])
+
             self.canvas.drawGrid(self.grid)
 
     # Création d'une grille
     def createGame(self):
         self.newGame()
-        self.grid.setVirginGrid()
+        self.grid.newGrid()
         self.canvas.drawGrid(self.grid)
         self.bind('<Button-1>', self.eventGame)
 
@@ -57,8 +63,7 @@ class Game(MainWindow):
     # Backup de la grille
     def backupGame(self):
         self.stopGame()
-
-        f = self.datas.saveJson(self.grid.grid)
+        f = self.datas.saveJson(self.gridToJson())
         if f != False:
             self.nameGrid = f
 
@@ -69,8 +74,16 @@ class Game(MainWindow):
         if self.nameGrid == "":
             self.backupGame()
         else:
-            self.datas.writeJson(self.nameGrid, self.grid.grid)
-    
+            self.datas.writeJson(self.nameGrid, self.gridToJson())
+
+    # Convertion grid=>json
+    def gridToJson(self):
+        gridBackup = {}
+        for x in self.grid.grid:
+            gridBackup[str(x[0]) + ":" + str(x[1])] = self.grid.grid[x]
+
+        return gridBackup
+
     # Nouveau jeu
     def newGame(self):
         self.stopGame()

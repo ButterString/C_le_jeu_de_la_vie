@@ -15,10 +15,6 @@ class GridModel():
         # Initialisation de la grille
         self._grid = {}
 
-    # Appel d'une cellule localisée. Arguments(ligne et cellule) 
-    def getCell(self, l, c):
-        return self._grid[(l, c)]
-
     @property
     def steps(self):
         return self._steps
