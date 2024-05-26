@@ -1,9 +1,6 @@
 {
-    "grid" : {
-        "steps" : [30, 30],
-        "alive" : 1,
-        "dead" : 0,
-        "influence" : 1
+    "datas": {
+        "grids": "jsons/grids/"
     },
     "canvas" : {
         "title" : "LifeGame",
@@ -15,5 +12,11 @@
         "hauteur" : 900,
         "alive" : "white",
         "dead" : "black"
+    },
+    "grid" : {
+        "steps" : [30, 30],
+        "alive" : 1,
+        "dead" : 0,
+        "influence" : 1
     }
 }

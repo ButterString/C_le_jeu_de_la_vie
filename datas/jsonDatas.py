@@ -9,11 +9,11 @@ class JsonDatas():
         self.setDefault()
     
     def setDefault(self):
-        self.directory = "jsons/"
+        self._directory = "jsons/"
         self.extension = ".json"
     
     def jsonRead(self, name):
-        return self.findJson(self.directory + name + self.extension)
+        return self.findJson(self._directory + name + self.extension)
 
     def findJson(self, fileName):
         if fileName != '':
@@ -23,7 +23,11 @@ class JsonDatas():
             return datas
     
     def loadJson(self):
-        f = askopenfilename(title="sélectionner votre grille",filetypes=[('JSON files','.json')])
+        f = askopenfilename(
+            initialdir = self._directory,
+            title="sélectionner votre grille",
+            filetypes=[('JSON files','.json'), ("all files", "*.*")]
+        )
         return f if f != "" else False
 
     def saveJson(self, datas):
@@ -37,3 +41,11 @@ class JsonDatas():
         f = open(fileName, "w")
         f.write(json.dumps(datas))
         f.close()
+
+    @property
+    def directory(self):
+        return self._directory
+
+    @directory.setter
+    def directory(self, directory):
+        self._directory = directory

@@ -15,6 +15,7 @@ class Game(WindowModel):
         self.datas = JsonDatas()
         # Récupération de la configuration
         config = self.datas.jsonRead("configGame")
+        self.datas.directory = config["datas"]["grids"]
         # Initialisation du model
         super().__init__( config["canvas"])
 
