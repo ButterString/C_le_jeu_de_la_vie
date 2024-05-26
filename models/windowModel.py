@@ -11,6 +11,7 @@ class WindowModel(tkinter.Tk):
         self.resizable(0, 0)
         # self.title('Life Game')
         self.title(config["title"])
+        self.iconbitmap(config["icone"])
         # self.attributes('-alpha', 0.75)
         self.attributes('-alpha', 0.75)
         # self.configure(background = 'black')
