@@ -23,6 +23,12 @@ for l in range(steps[0]):
         grid[(l, c)] = 1 if (l, c) in shema else 0
         # grid[(l, c)] = random.choice(states)
 
+words = "10:3"
+wordsTuple = tuple(map(int, words.split(":")))
+print(wordsTuple)
+wordStr = ":".join(map(str, wordsTuple))
+print(wordStr)
+
 """
 Évaluation d'une cellule
 """
@@ -51,17 +57,17 @@ for l in range(steps[0]):
 """
 convertion pour json
 """
-gridBackup = {}
-for x in grid:
-    gridBackup[str(x[0]) + ":" + str(x[1])] = grid[x]
+# gridBackup = {}
+# for x in grid:
+#     gridBackup[str(x[0]) + ":" + str(x[1])] = grid[x]
 
-datas = JsonDatas()
-datas.writeJson("clock.json", gridBackup)
+# datas = JsonDatas()
+# datas.writeJson("clock.json", gridBackup)
 
 """
 convertion depuis json
 """
-for x in gridBackup:
-    coord = x.split(":")
-    grid[(int(coord[0]), int(coord[1]))] = gridBackup[x]
+# for x in gridBackup:
+#     coord = x.split(":")
+#     grid[(int(coord[0]), int(coord[1]))] = gridBackup[x]
 
