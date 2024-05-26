@@ -6,8 +6,8 @@ import copy
 from models.gridModel import GridModel
 
 class Grid(GridModel):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, config):
+        super().__init__(config)
 
     # Génération d'une grille
     def newGrid(self, rand = False):

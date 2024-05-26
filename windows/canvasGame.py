@@ -3,8 +3,8 @@
 from models.canvasModel import CanvasModel
 
 class CanvasGame(CanvasModel):
-    def __init__(self, mainWindow):
-        super().__init__(mainWindow)
+    def __init__(self, mainWindow, config):
+        super().__init__(mainWindow, config)
 
     # Fonctions de génération de la grille
     def drawGrid(self, grid):

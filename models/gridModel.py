@@ -1,17 +1,17 @@
 # coding: utf-8
 
 class GridModel():
-    def __init__(self):
+    def __init__(self, config):
         # Dimensions par défaut
-        self._steps = (30, 30)
+        self._steps = tuple(config["steps"])
         # valeur des cellules vivantes
-        self._alive = 1
+        self._alive = config["alive"]
         # valeur des cellules mortes
-        self._dead = 0
+        self._dead = config["dead"]
         # Tableau des états des cellules (pour la génération aléatoire)
         self._states = (self._alive, self._dead)
         # Déclaration du rayon d'influence
-        self._influence = 1
+        self._influence = config["influence"]
         # Initialisation de la grille
         self._grid = {}
 

@@ -3,21 +3,25 @@
 from tkinter import Canvas
 import math
 
-from windows.mainWindow import MainWindow
-from canvasGrids.canvasGame import CanvasGame
+from models.windowModel import WindowModel
+from windows.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
 from grids.grid import Grid
 from datas.jsonDatas import JsonDatas
 
-class Game(MainWindow):
+class Game(WindowModel):
     def __init__(self):
-        super().__init__()
         # Déclaration des données
         self.datas = JsonDatas()
+        # Récupération de la configuration
+        config = self.datas.jsonRead("configGame")
+        # Initialisation du model
+        super().__init__( config["canvas"])
+
         # Déclaration de la grille
-        self.grid = Grid()
+        self.grid = Grid(config["grid"])
         # Déclaration du canvas
-        self.canvas = CanvasGame(self)
+        self.canvas = CanvasGame(self, config["canvas"])
         # Initialisation de la barre de menu
         self.menuBar = MenuBar(self)
         # Statut de lecture

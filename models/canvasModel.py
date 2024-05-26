@@ -3,16 +3,16 @@
 from tkinter import Canvas
 
 class CanvasModel():
-    def __init__(self, mainWindow):
-        # Couleur des cellules vivante
-        self._alive = 'white'
-        # Couleur des cellules mortes
-        self._dead = 'black'
+    def __init__(self, mainWindow, config):
         # Dimensions
-        self.setDimensions(900, 900)
+        self.setDimensions(config["largeur"], config["hauteur"])
+        # Couleur des cellules vivante
+        self._alive = config["alive"]
+        # Couleur des cellules mortes
+        self._dead = config["dead"]
 
         # Déclaration du canvas
-        self._canvas = Canvas(mainWindow, width=self.sizeW, height=self.sizeH, bg='black')
+        self._canvas = Canvas(mainWindow, width=self.sizeW, height=self.sizeH, bg=config["background"])
         self._canvas.pack()
 
     # Dimensions du canvas

@@ -1,0 +1,18 @@
+{
+    "grid" : {
+        "steps" : [30, 30],
+        "alive" : 1,
+        "dead" : 0,
+        "influence" : 1
+    },
+    "canvas" : {
+        "title" : "LifeGame",
+        "alpha" : 0.75,
+        "background" : "black",
+        "dimensions" : "900x900",
+        "largeur" : 900,
+        "hauteur" : 900,
+        "alive" : "white",
+        "dead" : "black"
+    }
+}
