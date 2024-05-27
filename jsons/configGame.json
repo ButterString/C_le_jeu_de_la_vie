@@ -1,6 +1,6 @@
 {
     "datas": {
-        "grids": "jsons/grids/"
+        "gridsDir": "jsons/grids/"
     },
     "canvas" : {
         "title" : "LifeGame",

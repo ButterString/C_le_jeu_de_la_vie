@@ -3,32 +3,11 @@
 from tkinter import Canvas
 import math
 
-from models.windowModel import WindowModel
-from windows.canvasGame import CanvasGame
-from windows.menuBar import MenuBar
-from grids.grid import Grid
-from datas.jsonDatas import JsonDatas
+from models.gameModel import GameModel
 
-class Game(WindowModel):
+class Game(GameModel):
     def __init__(self):
-        # Déclaration des données
-        self.datas = JsonDatas()
-        # Récupération de la configuration
-        config = self.datas.jsonRead("configGame")
-        self.datas.directory = config["datas"]["grids"]
-        # Initialisation du model
-        super().__init__( config["canvas"])
-
-        # Déclaration de la grille
-        self.grid = Grid(config["grid"])
-        # Déclaration du canvas
-        self.canvas = CanvasGame(self, config["canvas"])
-        # Initialisation de la barre de menu
-        self.menuBar = MenuBar(self)
-        # Statut de lecture
-        self.play = False
-        # Nom de la grille
-        self.nameGrid = ""
+        super().__init__()
 
     # Génération d'une grille aléatoire
     def randomGame(self):
@@ -85,25 +64,3 @@ class Game(WindowModel):
             gridBackup[coords] = grid[x]
 
         return gridBackup
-
-    # Nouveau jeu
-    def newGame(self):
-        self.stopGame()
-        self.nameGrid = ""
-
-    # Lancement du jeu
-    def startGame(self):
-        self.unbind('<Button-1>')
-        self.statut = True
-        self.playGame()
-
-    # Arrêt du jeu
-    def stopGame(self):
-        self.statut = False
-
-    # Lecture du jeu
-    def playGame(self):
-        if self.statut == True:
-            self.statut = self.grid.evolveGrid()
-            self.canvas.drawGrid(self.grid)
-            self.after(250, self.playGame)
