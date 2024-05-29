@@ -23,15 +23,15 @@ class GameModel(WindowModel):
         # Redimensionnement de la fenètre
         self.resizable(0, 0)
         # Titre de la fenètre
-        self.title(config["canvas"]["title"])
+        self.title(config["title"])
         # Icone de la fenètre
-        self.iconbitmap(config["canvas"]["icone"])
+        self.iconbitmap(config["icone"])
         # Alpha de la fenètre
-        self.attributes('-alpha', config["canvas"]["alpha"])
+        self.attributes('-alpha', config["alpha"])
         # Background de la fenètre
-        self.configure(background = config["canvas"]["background"])
+        self.configure(background = config["background"])
         # Dimensions de la fenètre
-        self.geometry(config["canvas"]["dimensions"])
+        self.geometry(config["dimensions"])
 
         """
         Configuration des dépendances

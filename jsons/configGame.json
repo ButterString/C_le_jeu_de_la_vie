@@ -1,17 +1,18 @@
 {
+    "title" : "LifeGame",
+    "icone" : "lifeGame.ico",
+    "alpha" : 0.75,
+    "background" : "black",
+    "dimensions" : "900x900",
     "datas": {
         "gridsDir": "jsons/grids/"
     },
     "canvas" : {
-        "title" : "LifeGame",
-        "icone" : "lifeGame.ico",
-        "alpha" : 0.75,
-        "background" : "black",
-        "dimensions" : "900x900",
         "largeur" : 900,
         "hauteur" : 900,
         "alive" : "white",
-        "dead" : "black"
+        "dead" : "black",
+        "bg" : "black"
     },
     "grid" : {
         "steps" : [30, 30],

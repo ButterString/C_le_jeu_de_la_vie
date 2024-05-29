@@ -31,10 +31,11 @@ class JsonDatas():
         return f if f != "" else False
 
     def saveJson(self, datas):
-        f = asksaveasfile(mode='w', defaultextension=".json")
+        f = asksaveasfile(initialdir = self._directory, mode='w', defaultextension=".json")
         filename = f.name if f != None else False
-        f.write(json.dumps(datas))
-        f.close()
+        if filename != False:
+            f.write(json.dumps(datas))
+            f.close()
         return filename
 
     def writeJson(self, fileName, datas):

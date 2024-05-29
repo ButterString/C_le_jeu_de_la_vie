@@ -12,7 +12,7 @@ class CanvasModel():
         self._dead = config["dead"]
 
         # Déclaration du canvas
-        self._canvas = Canvas(mainWindow, width=self.sizeW, height=self.sizeH, bg=config["background"])
+        self._canvas = Canvas(mainWindow, width=self.sizeW, height=self.sizeH, bg=config["bg"])
         self._canvas.pack()
 
     # Dimensions du canvas
