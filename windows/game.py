@@ -18,10 +18,10 @@ class Game(GameModel):
     # Chargement d'une grille
     def loadGame(self):
         self.newGame()
-        self.nameGrid = self.datas.loadJson()
+        self.nameGrid = self.datas.findJson()
 
         if self.nameGrid != False:
-            self.grid.grid = self.convertGrid(self.datas.findJson(self.nameGrid), False)
+            self.grid.grid = self.datas.loadGrid(self.nameGrid)
             self.canvas.drawGrid(self.grid)
 
     # Création d'une grille
@@ -42,7 +42,8 @@ class Game(GameModel):
     # Backup de la grille
     def backupGame(self):
         self.stopGame()
-        f = self.datas.saveJson(self.convertGrid(self.grid.grid))
+        f = self.datas.saveGrid(self.grid.grid)
+
         if f != False:
             self.nameGrid = f
 
@@ -53,14 +54,4 @@ class Game(GameModel):
         if self.nameGrid == "":
             self.backupGame()
         else:
-            self.datas.writeJson(self.nameGrid, self.convertGrid(self.grid.grid))
-
-    # Convertion grid<=>json
-    def convertGrid(self, grid, toJson = True):
-        gridBackup = {}
-
-        for x in grid:
-            coords = ":".join(map(str, x)) if toJson == True else tuple(map(int, x.split(":")))
-            gridBackup[coords] = grid[x]
-
-        return gridBackup
+            self.datas.writeGrid(self.nameGrid, self.grid.grid)

@@ -4,14 +4,14 @@ from models.windowModel import WindowModel
 from windows.canvasGame import CanvasGame
 from windows.menuBar import MenuBar
 from grids.grid import Grid
-from datas.jsonDatas import JsonDatas
+from bridges.datasBridge import DatasBridge
 
 class GameModel(WindowModel):
     def __init__(self):
         # Initialisation du model
         super().__init__()
         # Déclaration des données
-        self.datas = JsonDatas()
+        self.datas = DatasBridge()
         # Récupération de la configuration
         config = self.datas.jsonRead("configGame")
         # Définition du répertoire des grille

@@ -13,22 +13,22 @@ class JsonDatas():
         self.extension = ".json"
     
     def jsonRead(self, name):
-        return self.findJson(self._directory + name + self.extension)
-
-    def findJson(self, fileName):
-        if fileName != '':
-            f = open(fileName, "r")
-            datas = json.load(f)
-            f.close()
-            return datas
+        return self.loadJson(self._directory + name + self.extension)
     
-    def loadJson(self):
+    def findJson(self):
         f = askopenfilename(
             initialdir = self._directory,
             title="sélectionner votre grille",
             filetypes=[('JSON files','.json'), ("all files", "*.*")]
         )
         return f if f != "" else False
+
+    def loadJson(self, fileName):
+        if fileName != '':
+            f = open(fileName, "r")
+            datas = json.load(f)
+            f.close()
+            return datas
 
     def saveJson(self, datas):
         f = asksaveasfile(initialdir = self._directory, mode='w', defaultextension=".json")
