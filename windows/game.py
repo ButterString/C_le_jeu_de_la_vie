@@ -46,6 +46,7 @@ class Game(GameModel):
 
         if f != False:
             self.nameGrid = f
+            self.datas.writeGrid(self.nameGrid, self.grid.grid)
 
     # sauvegarde de la grille
     def saveGame(self):

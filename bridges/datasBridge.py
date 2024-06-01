@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from datas.jsonDatas import JsonDatas
+from datasPack.jsonDatas import JsonDatas
 
 class DatasBridge(JsonDatas):
     def __init__(self):
@@ -16,7 +16,7 @@ class DatasBridge(JsonDatas):
         self.writeJson(fileName, self.convertGrid(datas))
 
     def saveGrid(self, datas):
-        self.saveJson(self.convertGrid(datas))
+        return self.saveJson(self.convertGrid(datas))
 
     # Convertion grid<=>json
     def convertGrid(self, grid, toJson = True):
