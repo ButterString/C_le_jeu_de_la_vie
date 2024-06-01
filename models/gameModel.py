@@ -15,7 +15,7 @@ class GameModel(WindowModel):
         # Récupération de la configuration
         config = self.datas.jsonRead("configGame")
         # Définition du répertoire des grille
-        self.datas.directory = config["datas"]["gridsDir"]
+        self.datas.directory = config["gridsDir"]
 
         """
         Configuration de la fenètre

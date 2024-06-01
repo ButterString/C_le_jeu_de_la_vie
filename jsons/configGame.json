@@ -4,9 +4,7 @@
     "alpha" : 0.75,
     "background" : "black",
     "dimensions" : "900x900",
-    "datas": {
-        "gridsDir": "jsons/grids/"
-    },
+    "gridsDir": "jsons/grids/",
     "canvas" : {
         "largeur" : 900,
         "hauteur" : 900,
