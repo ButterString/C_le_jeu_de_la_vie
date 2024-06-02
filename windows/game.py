@@ -1,6 +1,5 @@
 # coding: utf-8
 
-from tkinter import Canvas
 import math
 
 from models.gameModel import GameModel
