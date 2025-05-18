@@ -3,7 +3,7 @@
     "icone" : "lifeGame.ico",
     "alpha" : 0.75,
     "background" : "black",
-    "dimensions" : "900x900",
+    "dimensions" : "900x925",
     "gridsDir": "jsons/grids/",
     "canvas" : {
         "largeur" : 900,
